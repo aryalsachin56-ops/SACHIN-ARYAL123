@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sushmita, Will You Be My Valentine? 💘</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffd6e0, #ff9a9e);
+      overflow: hidden;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 22px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      width: min(92vw, 420px);
+      position: relative;
+    }
+    h1 { color: #ff4d6d; margin-bottom: 10px; font-size: 1.6rem; }
+    p { color: #444; margin: 8px 0 18px; }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      position: relative;
+      height: 60px;
+    }
+    button {
+      padding: 12px 18px;
+      font-size: 15px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    #yesBtn { background-color: #ff4d6d; color: white; }
+    #noBtn {
+      background-color: #eee;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .hint { font-size: .9rem; color: #777; min-height: 22px; }
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      display: none;
+    }
+    .heart {
+      position: absolute;
+      font-size: 22px;
+      animation: float 4s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 1; }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <h1>Sushmita 💖</h1>
+  <p>Will you be my Valentine?</p>
+  <div class="buttons">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 🙃</button>
+  </div>
+  <div class="hint" id="hint">(Be honest… but also be cute 😄)</div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const card = document.getElementById('card');
+  const hearts = document.getElementById('hearts');
+  const hint = document.getElementById('hint');
+
+  let noCount = 0;
+  const messages = [
+    "Are you suuure? 🥺",
+    "I brought chocolates though 🍫",
+    "What if I say please? 😌",
+    "Okay last chance… maybe 😏",
+    "At this point destiny is deciding 💘"
+  ];
+
+  noBtn.addEventListener('mouseenter', () => {
+    noCount++;
+    hint.textContent = messages[Math.min(noCount - 1, messages.length - 1)];
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+    if (noCount >= 5) setTimeout(showFinal, 700);
+  });
+
+  yesBtn.addEventListener('click', showFinal);
+
+  function showFinal() {
+    card.innerHTML = "<h1>Yayyy! 💘</h1><p>Sushmita, you just made my day ❤️</p>";
+    hearts.style.display = 'block';
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      hearts.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
